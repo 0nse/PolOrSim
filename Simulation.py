@@ -7,8 +7,6 @@ from random import randint, choice
 from Configuration import *
 from PoliticalOrientation import Orientation
 import Deffuant
-# If you need to work on multiple graphs, use
-# from Graphs_multiple import Graphs
 from Graph import Graph
 from Statistics import Statistics
 
@@ -17,17 +15,19 @@ print("\n\t-".join(["Showing plots.", "N=number of nodes", "R=number of runs",
           "ASP=average shortest path length", "E=Edges"]))
 # TODO: islands
 # TODO: TVs (generalisation of Agents)
-for (graphName, [graph, density, asp, edgesAmount]) in Graph().buildDict().items():
-  print("%s (N=%i, R=%i, C=%.1f, D=%.2f, ASP=%.2f, E=%i):" % (graphName,
-                         AGENTS_AMOUNT, RUNS, CONVERGENCE_PARAMETER, density,
-                         asp, edgesAmount))
+baGraph = Graph()
+graph = baGraph.graph
+[graphName, density, asp, edgesAmount] = baGraph.getInformation()
+print("%s (N=%i, R=%i, C=%.1f, D=%.2f, ASP=%.2f, E=%i):" % (graphName,
+                     AGENTS_AMOUNT, RUNS, CONVERGENCE_PARAMETER, density,
+                     asp, edgesAmount))
 
-  orientationAtT = Statistics()
+orientationAtT = Statistics()
 
-  for j in range(RUNS):
-    orientationAtT.addDominantColours(graph)
-    Deffuant.apply(graph)
-
-  # add final configuration and plot it:
+for j in range(RUNS):
   orientationAtT.addDominantColours(graph)
-  orientationAtT.plot()
+  Deffuant.apply(graph)
+
+# add final configuration and plot it:
+orientationAtT.addDominantColours(graph)
+orientationAtT.plot()

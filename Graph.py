@@ -11,10 +11,9 @@ class Graph:
     self.graph = nx.barabasi_albert_graph(NODES_AMOUNT, INITIAL_CONNECTIONS)
     self.initialiseAgentNetwork()
 
-  def buildDict(self):
-    """Returns a dict with the name as key and the graphs as
-    value together with some statistical information."""
-    return {"Barabási-Albert" : [self.graph, nx.density(self.graph), nx.average_shortest_path_length(self.graph), len(nx.edges(self.graph))]}
+  def getInformation(self):
+    """Returns a list of (statistical) information about the graph."""
+    return ["Barabási-Albert", nx.density(self.graph), nx.average_shortest_path_length(self.graph), len(nx.edges(self.graph))]
 
   def initialiseAgentNetwork(self):
     """Initialises agents on the graph nodes. It would be possible

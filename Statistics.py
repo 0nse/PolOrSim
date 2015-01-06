@@ -23,7 +23,7 @@ class Statistics:
         value = agent.orientation[name]
         if value > highestValue[1]:
           highestValue = (name, value)
-      orientationCounts[highestValue[0]] += 1 # reference or value? TODO
+      orientationCounts[highestValue[0]] += 1
 
     # add all counts including the dominant colour:
     for name in orientationCounts:

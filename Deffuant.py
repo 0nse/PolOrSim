@@ -1,9 +1,15 @@
 # coding: utf-8
 
-from Configuration import THRESHOLD, CONVERGENCE_PARAMETER, AGENTS_AMOUNT
+from Configuration import CONVERGENCE_PARAMETER, AGENTS_AMOUNT
 from PoliticalOrientation import Orientation
 
 def apply(graph):
+  """Choose an agent and one of his neighbours randomly. Then,
+  check their difference in orientations. If the difference is
+  low enough to be accepted by one (or both) agents, the
+  affected agents' orientations are modified. For this Deffuant
+  step to finish, at least one of two agents must have accepted
+  the opinion of the other agent."""
   # TODO a heuristic would be nice to not draw the same pairs over and over again
   from random import randint
 
@@ -17,35 +23,28 @@ def apply(graph):
       n2_id = neighbours[n2_rand]
       a2 = graph.node[n2_id]["Agent"]
 
-      if areInterestsSimilar(a1, a2):
-        adjustInterests(graph, n1_id, n2_id)
-        applied = True
+      difference = calculateOrientationDifference(a1, a2)
+      applied = adjustInterestsIfTolerantEnough(a1, a2, difference)
+      applied = adjustInterestsIfTolerantEnough(a2, a1, difference) or applied
     except IndexError:
       pass # do we ever end up here?
 
-def areInterestsSimilar(a1, a2):
+def calculateOrientationDifference(a1, a2):
   """Takes each interest value and subtracts value_j from value_i.
   This is taken as an absolute value and summed up as a difference
-  measure which will be averaged and tested against the threshold.
-  Both a1 and a2 are Agents."""
+  measure which will be averaged."""
   difference = 0
   for name, member in Orientation.__members__.items():
     difference += abs(a1.orientation[name] - a2.orientation[name])
-  return (difference / len(Orientation) < THRESHOLD)
+  return (difference / len(Orientation))
 
-def adjustInterests(graph, n1_id, n2_id):
-  """ Receives the graphs and the identifiers of the two agents.
-  Applies the Deffuant step on both. n1OrientationP is the
-  probability associated with the orientation of agent 1."""
-  # TODO can we also directly work on the agents and rely on the graph being updated by reference?
-  a1 = graph.node[n1_id]["Agent"]
-  a2 = graph.node[n2_id]["Agent"]
-  for name, member in Orientation.__members__.items():
-    n1OrientationP = a1.orientation[name]
-    n2OrientationP = a2.orientation[name]
-
-    a1.orientation[name] = n1OrientationP + CONVERGENCE_PARAMETER * (n2OrientationP - n1OrientationP)
-    a2.orientation[name] = n2OrientationP + CONVERGENCE_PARAMETER * (n1OrientationP - n2OrientationP)
-
-  graph.node[n1_id]["Agent"] = a1
-  graph.node[n2_id]["Agent"] = a2
+def adjustInterestsIfTolerantEnough(a1, a2, difference):
+  """ Applies the Deffuant step on agent a1 if the difference
+  in orientations lower than its tolerance. Returns True on
+  application and false else."""
+  if difference < a1.tolerance:
+    for name, member in Orientation.__members__.items():
+      a1.orientation[name] = a1.orientation[name] + CONVERGENCE_PARAMETER * (a2.orientation[name]- a1.orientation[name])
+    return True
+  else:
+    return False

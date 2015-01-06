@@ -18,9 +18,9 @@ print("\n\t-".join(["Showing plots.", "N=number of nodes", "R=number of runs",
 # TODO: islands
 # TODO: TVs (generalisation of Agents)
 for (graphName, [graph, density, asp, edgesAmount]) in Graph().buildDict().items():
-  print("%s (N=%i, R=%i, T=%.1f C=%.1f, D=%.2f, ASP=%.2f, E=%i):" % (graphName,
-                         AGENTS_AMOUNT, RUNS, THRESHOLD, CONVERGENCE_PARAMETER,
-                         density, asp, edgesAmount))
+  print("%s (N=%i, R=%i, C=%.1f, D=%.2f, ASP=%.2f, E=%i):" % (graphName,
+                         AGENTS_AMOUNT, RUNS, CONVERGENCE_PARAMETER, density,
+                         asp, edgesAmount))
 
   orientationAtT = Statistics()
 

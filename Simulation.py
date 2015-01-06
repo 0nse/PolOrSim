@@ -7,6 +7,9 @@ from random import randint, choice
 from Configuration import *
 from PoliticalOrientation import Orientation
 import Deffuant
+# If you want to generate graphs with models other than Barabási-Albert or want
+# to run this simulation on multiple graphs at once,
+# @see 2d254fc82d95c599dfb903b959064f4e1ebcc2ae
 from Graph import Graph
 from Statistics import Statistics
 

@@ -3,7 +3,7 @@
 from PoliticalOrientation import Orientation
 from Configuration import RUNS
 
-class Statistics:
+class Statistic:
   def __init__(self):
     """Create a dictionary of orientations."""
     self.dominantColours = {}

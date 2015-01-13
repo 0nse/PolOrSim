@@ -2,13 +2,15 @@
 
 import networkx as nx
 from Agent import Agent
+from Statistic import Statistic
 
 class Graph:
   def __init__(self, nodesAmount):
-    """Create a Barabási-Albert graph."""
+    """Create a pre-populated Barabási-Albert graph."""
     from Configuration import LINK_CREATION_PROBABILITY, INITIAL_CONNECTIONS
 
     self.graph = nx.barabasi_albert_graph(nodesAmount, INITIAL_CONNECTIONS)
+    self.statistic = Statistic()
     self.initialiseAgentNetwork()
 
   def getInformation(self):

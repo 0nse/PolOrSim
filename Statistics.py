@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from PoliticalOrientation import Orientation
-from Configuration import AGENTS_AMOUNT, RUNS
+from Configuration import RUNS
 
 class Statistics:
   def __init__(self):
@@ -27,7 +27,7 @@ class Statistics:
 
     # add all counts including the dominant colour:
     for name in orientationCounts:
-      self.dominantColours[name].append(orientationCounts[name] / AGENTS_AMOUNT)
+      self.dominantColours[name].append(orientationCounts[name] / len(graph))
 
   def plot(self):
     from matplotlib import pyplot

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from Configuration import CONVERGENCE_PARAMETER, AGENTS_AMOUNT
+from Configuration import CONVERGENCE_PARAMETER
 from PoliticalOrientation import Orientation
 
 def apply(graph):
@@ -15,7 +15,7 @@ def apply(graph):
 
   applied = False
   while(not applied):
-    n1_id = randint(0, AGENTS_AMOUNT-1)
+    n1_id = randint(0, len(graph) - 1)
     a1 = graph.node[n1_id]["Agent"]
     neighbours = graph.neighbors(n1_id)
     n2_rand = randint(0, len(neighbours)-1)

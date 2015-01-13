@@ -1,9 +1,10 @@
 # coding: utf-8
 
 # simulation constants:
-AGENTS_AMOUNT = 300
-AGENTS_AMOUNT_PERC = AGENTS_AMOUNT / 100
+AGENTS_AMOUNT_MIN = 100
+AGENTS_AMOUNT_MAX = 2000
 RUNS = 5000
+ISLANDS = 6
 
 # agent cosntants:
 MAX_TOLERANCE = 0.5

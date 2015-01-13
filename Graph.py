@@ -25,12 +25,10 @@ class Graph:
       self.graph.node[nodeId]["Agent"] = Agent(True)
 
   def createAverageAgent(self):
-    """Calculate the average agent of this graph and set his
-    tolerance to zero to prevent change in its orientation."""
+    """Calculate the average agent"""
     from PoliticalOrientation import Orientation
 
     averageAgent = Agent(False)
-    averageAgent.tolerance = 0
 
     for nodeId in self.graph.nodes_iter():
       currentAgent = self.graph.node[nodeId]["Agent"]

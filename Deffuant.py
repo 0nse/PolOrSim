@@ -26,6 +26,15 @@ def apply(graph):
   except IndexError:
     return False
 
+def applyToAll(graph, averageAgent):
+  """Simulate the averageAgent meeting all agents of the graph
+  and apply the deffuant step where possible."""
+  for nodeId in graph.nodes_iter():
+    currentAgent = graph.node[nodeId]["Agent"]
+    difference = calculateOrientationDifference(currentAgent, averageAgent)
+    adjustInterestsIfTolerantEnough(currentAgent, averageAgent, difference)
+
+
 def calculateOrientationDifference(a1, a2):
   """Takes each interest value and subtracts value_j from value_i.
   This is taken as an absolute value and summed up as a difference

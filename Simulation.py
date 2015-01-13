@@ -12,7 +12,7 @@ from Graph import Graph
 print("\n\t-".join(["Showing plots.", "N=number of nodes", "R=number of runs",
           "T=threshold", "C=convergence parameter", "D=density",
           "ASP=average shortest path length", "E=Edges"]))
-# TODO: TVs (generalisation of Agents)
+
 graphs = []
 statistics = []
 for i in range(0, ISLANDS):
@@ -32,8 +32,13 @@ for i in range(RUNS):
     if (i % EXCHANGE_STEPS) != 0:
       Deffuant.apply(graph)
     else:
-      graphObject.createAverageAgent()
-      # TODO: exchange agent orientations
+      """Create the average agent of each graph and send them to
+      each other graph to talk to all its nodes."""
+      averageAgent = graphObject.createAverageAgent()
+      for otherGraphObject in graphs:
+        if otherGraphObject is not graphObject:
+          otherGraph = otherGraphObject.graph
+          Deffuant.applyToAll(otherGraph, averageAgent)
 
 # add final configuration and plot it:
 for graphObject in graphs:

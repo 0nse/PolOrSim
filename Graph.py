@@ -40,3 +40,5 @@ class Graph:
 
     for key, value in averageAgent.orientation.items():
       averageAgent.orientation[key] /= len(self.graph)
+
+    return averageAgent

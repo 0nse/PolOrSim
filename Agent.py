@@ -2,15 +2,21 @@
 from PoliticalOrientation import Orientation
 
 class Agent:
-  def __init__(self):
-    """On class creation, randomly generate attributes."""
+  def __init__(self, generateInterests):
+    """On class creation, randomly generate attributes if
+    generateInterests is True. Else all attributes are 0."""
     from random import uniform
     from Configuration import MAX_TOLERANCE
 
     self.orientation = {}
 
     self.tolerance = uniform(0, MAX_TOLERANCE)
-    self.initialiseOrientation()
+    if generateInterests:
+      self.initialiseOrientation()
+    else:
+      for name, member in Orientation.__members__.items():
+        self.orientation[name] = 0
+
 
   def initialiseOrientation(self):
     """Set orientations randomly as probabilities.

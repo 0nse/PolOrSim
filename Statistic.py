@@ -31,6 +31,9 @@ class Statistic:
 
   def plot(self):
     from matplotlib import pyplot
+    from datetime import datetime
+    from pylab import savefig
+
     for (name, amounts) in self.dominantColours.items():
       colour = Orientation[name].value
       pyplot.plot(range(RUNS+1), amounts, color=colour, label=name)
@@ -39,4 +42,5 @@ class Statistic:
     # fully use the given bounding box:
     pyplot.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=1,
                   ncol=2, mode="expand", borderaxespad=0.)
-    pyplot.show()
+    savefig('./diagrams/graph_%s.png' % datetime.now().isoformat())
+    pyplot.close()

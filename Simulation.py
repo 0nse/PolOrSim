@@ -23,6 +23,7 @@ for i in range(0, ISLANDS):
                         RUNS, CONVERGENCE_PARAMETER, density, asp, edgesAmount))
 
 for i in range(RUNS):
+  graphs = sample(graphs, len(graphs))
   for graphObject in graphs:
     graph = graphObject.graph
     statistic = graphObject.statistic

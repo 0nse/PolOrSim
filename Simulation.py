@@ -1,7 +1,6 @@
 # coding: utf-8
 
-import itertools
-from random import randint, choice
+from random import randint, choice, sample
 from Configuration import *
 from PoliticalOrientation import Orientation
 import Deffuant
@@ -35,7 +34,8 @@ for i in range(RUNS):
       """Create the average agent of each graph and send them to
       each other graph to talk to all its nodes."""
       averageAgent = graphObject.createAverageAgent()
-      for otherGraphObject in graphs:
+      graphsPermutation = sample(graphs, len(graphs))
+      for otherGraphObject in graphsPermutation:
         if otherGraphObject is not graphObject:
           otherGraph = otherGraphObject.graph
           Deffuant.applyToAll(otherGraph, averageAgent)

@@ -4,9 +4,9 @@ from random import randint, choice, sample
 from Configuration import *
 from PoliticalOrientation import Orientation
 import Deffuant
-# If you need to work on multiple graphs, use
-# from Graphs_multiple import Graphs
 from Graph import Graph
+from Statistic import Statistic
+from Agent import createEmptyOrientationDictionary
 
 print("\n\t-".join(["Showing plots.", "N=number of nodes", "R=number of runs",
           "T=threshold", "C=convergence parameter", "D=density",
@@ -22,27 +22,36 @@ for i in range(0, ISLANDS):
   print("%s (N=%i, R=%i, C=%.1f, D=%.2f, ASP=%.2f, E=%i):" % (graphName, inhabitantsAmount,
                         RUNS, CONVERGENCE_PARAMETER, density, asp, edgesAmount))
 
+globalStatistic = Statistic()
 for i in range(RUNS):
+  globalOrientationCounts = createEmptyOrientationDictionary()
   graphs = sample(graphs, len(graphs))
+
   for graphObject in graphs:
     graph = graphObject.graph
     statistic = graphObject.statistic
 
-    statistic.addDominantColours(graph)
+    orientationCounts = statistic.calculateAndAddDominantColours(graph)
+    for name in orientationCounts:
+      globalOrientationCounts[name] += orientationCounts[name]
     if (i % EXCHANGE_STEPS) != 0:
       Deffuant.apply(graph)
     else:
       """Create the average agent of each graph and send them to
-      each other graph to talk to all its nodes."""
+      every other graph to talk to all its nodes."""
       averageAgent = graphObject.createAverageAgent()
       graphsPermutation = sample(graphs, len(graphs))
       for otherGraphObject in graphsPermutation:
         if otherGraphObject is not graphObject:
           otherGraph = otherGraphObject.graph
           Deffuant.applyToAll(otherGraph, averageAgent)
+  globalStatistic.addDominantColours(globalOrientationCounts, len(graphs))
 
 # add final configuration and plot it:
+globalStatistic.addDominantColours(globalOrientationCounts, len(graphs))
+globalStatistic.plot()
+
 for graphObject in graphs:
   statistic = graphObject.statistic
-  statistic.addDominantColours(graph)
+  statistic.calculateAndAddDominantColours(graph)
   statistic.plot()

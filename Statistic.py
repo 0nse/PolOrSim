@@ -10,10 +10,11 @@ class Statistic:
     for orientation in Orientation:
       self.dominantColours[orientation.name] = []
 
-  def addDominantColours(self, graph):
+  def calculateAndAddDominantColours(self, graph):
     """Iterates over the whole graph and sums up for how many nodes
     a certain colour was dominant. Results are stored in
-    self.dominantColours as a percentage value."""
+    self.dominantColours as a percentage value. Furthermore returns
+    the counts for further processing."""
     orientationCounts = {orientation.name : 0 for orientation in Orientation}
     for nodeId in graph.nodes_iter():
       agent = graph.node[nodeId]["Agent"]
@@ -26,8 +27,16 @@ class Statistic:
       orientationCounts[highestValue[0]] += 1
 
     # add all counts including the dominant colour:
+    return self.addDominantColours(orientationCounts, len(graph))
+
+  def addDominantColours(self, orientationCounts, amount):
+    """Add alls colour counts and normalises them on the amount provided."""
+    normalisedOrientation = {}
     for name in orientationCounts:
-      self.dominantColours[name].append(orientationCounts[name] / len(graph))
+      value = orientationCounts[name] / amount
+      self.dominantColours[name].append(value)
+      normalisedOrientation[name] = value
+    return normalisedOrientation
 
   def plot(self):
     from matplotlib import pyplot

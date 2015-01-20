@@ -39,10 +39,13 @@ def calculateOrientationDifference(a1, a2):
   """Takes each interest value and subtracts value_j from value_i.
   This is taken as an absolute value and summed up as a difference
   measure which will be averaged."""
-  difference = 0
+  # TODO: remove weighting or document it
+  differenceSum = 0
   for name, member in Orientation.__members__.items():
-    difference += abs(a1.orientation[name] - a2.orientation[name])
-  return (difference / len(Orientation))
+    difference = abs(a1.orientation[name] - a2.orientation[name])
+    # punish great exceptions:
+    differenceSum += pow(difference * 10, 1) / 10
+  return (differenceSum / len(Orientation))
 
 def adjustInterestsIfTolerantEnough(a1, a2, difference):
   """ Applies the Deffuant step on agent a1 if the difference

@@ -49,9 +49,12 @@ class Statistic:
 
     # Place a legend above this legend, expanding itself to
     # fully use the given bounding box:
-    pyplot.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=1,
-                  ncol=2, mode="expand", borderaxespad=0.,
+    legend = pyplot.legend(bbox_to_anchor=(0.5, -0.1), loc=9,
+                           ncol=2,
                   title=title)
+    pyplot.xlabel('Runs')
+    pyplot.ylabel('Normalised orientation')
 
-    savefig('./plots/graph_%s.png' % datetime.now().isoformat())
+    savefig('./plots/graph_%s.png' % datetime.now().isoformat(),
+            dpi=300, bbox_inches="tight", additional_artists=[].append(legend))
     pyplot.close()

@@ -1,6 +1,13 @@
 # coding: utf-8
 from PoliticalOrientation import Orientation
 
+def createEmptyOrientationDictionary():
+  """Calculate the average agent"""
+  orientation = {}
+  for name, member in Orientation.__members__.items():
+    orientation[name] = 0
+  return orientation
+
 class Agent:
   def __init__(self, generateInterests):
     """On class creation, randomly generate attributes if
@@ -14,23 +21,18 @@ class Agent:
     if generateInterests:
       self.initialiseOrientation()
     else:
-      for name, member in Orientation.__members__.items():
-        self.orientation[name] = 0
+      self.orientation = createEmptyOrientationDictionary()
 
 
   def initialiseOrientation(self):
     """Set orientations randomly as probabilities.
     max(sum(orientation(node))) = 1
     min(sum(orientation(node))) = 0"""
-    from random import choice, randint
+    from random import randint, sample
 
-    orientationsLeft = [name for name, member in Orientation.__members__.items()]
+    orientationNames = sample([name for name, member in Orientation.__members__.items()], len(Orientation))
     percentageLeft = 100
-    for i in range(0, len(Orientation)):
+    for name in orientationNames:
       percentage = randint(0, percentageLeft)
       percentageLeft -= percentage
-
-      # randomly pick an orientation to prevent favouring one:
-      name = choice(orientationsLeft)
-      orientationsLeft.remove(name)
       self.orientation[name] = percentage / 100 # make it a probability

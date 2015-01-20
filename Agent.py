@@ -1,19 +1,13 @@
 # coding: utf-8
 from PoliticalOrientation import Orientation
 
-def createEmptyOrientationDictionary():
-  """Calculate the average agent"""
-  orientation = {}
-  for name, member in Orientation.__members__.items():
-    orientation[name] = 0
-  return orientation
-
 class Agent:
   def __init__(self, generateInterests):
     """On class creation, randomly generate attributes if
     generateInterests is True. Else all attributes are 0."""
     from random import uniform
     from Configuration import MAX_TOLERANCE
+    from HelperMethods import createEmptyOrientationDictionary
 
     self.orientation = {}
 

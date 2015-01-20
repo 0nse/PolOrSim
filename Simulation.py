@@ -8,7 +8,7 @@ from Graph import Graph
 from Statistic import Statistic
 from Agent import createEmptyOrientationDictionary
 
-print("\n\t-".join(["Showing plots.", "N=number of nodes", "R=number of runs",
+print("\n\t-".join(["Plots will be saved to disk.", "N=number of nodes", "R=number of runs",
           "T=threshold", "C=convergence parameter", "D=density",
           "ASP=average shortest path length", "E=Edges"]))
 
@@ -17,10 +17,6 @@ statistics = []
 for i in range(0, ISLANDS):
   inhabitantsAmount = randint(AGENTS_AMOUNT_MIN, AGENTS_AMOUNT_MAX)
   graphs.append(Graph(inhabitantsAmount))
-
-  [graphName, inhabitantsAmount, density, asp, edgesAmount] = graphs[i].getInformation()
-  print("%s (N=%i, R=%i, C=%.1f, D=%.2f, ASP=%.2f, E=%i):" % (graphName, inhabitantsAmount,
-                        RUNS, CONVERGENCE_PARAMETER, density, asp, edgesAmount))
 
 globalStatistic = Statistic()
 for i in range(RUNS):
@@ -49,9 +45,13 @@ for i in range(RUNS):
 
 # add final configuration and plot it:
 globalStatistic.addDominantColours(globalOrientationCounts, len(graphs))
-globalStatistic.plot()
+globalStatistic.plot("Average orientation of all islands.")
 
 for graphObject in graphs:
   statistic = graphObject.statistic
   statistic.calculateAndAddDominantColours(graph)
-  statistic.plot()
+
+  [graphName, inhabitantsAmount, density, asp, edgesAmount] = graphObject.getInformation()
+  title = ("%s (N=%i, R=%i, C=%.1f, D=%.2f, ASP=%.2f, E=%i):" % (graphName, inhabitantsAmount,
+                        RUNS, CONVERGENCE_PARAMETER, density, asp, edgesAmount))
+  statistic.plot(title)

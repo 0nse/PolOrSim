@@ -38,7 +38,7 @@ class Statistic:
       normalisedOrientation[name] = value
     return normalisedOrientation
 
-  def plot(self):
+  def plot(self, title=None):
     from matplotlib import pyplot
     from datetime import datetime
     from pylab import savefig
@@ -50,6 +50,8 @@ class Statistic:
     # Place a legend above this legend, expanding itself to
     # fully use the given bounding box:
     pyplot.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=1,
-                  ncol=2, mode="expand", borderaxespad=0.)
-    savefig('./diagrams/graph_%s.png' % datetime.now().isoformat())
+                  ncol=2, mode="expand", borderaxespad=0.,
+                  title=title)
+
+    savefig('./plots/graph_%s.png' % datetime.now().isoformat())
     pyplot.close()

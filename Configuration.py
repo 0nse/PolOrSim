@@ -11,7 +11,6 @@ ISLANDS = 6
 MAX_TOLERANCE = 0.7
 
 # graph constants:
-LINK_CREATION_PROBABILITY = 0.1
 INITIAL_CONNECTIONS = 20
 
 # deffuant constants:

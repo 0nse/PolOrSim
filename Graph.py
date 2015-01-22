@@ -7,7 +7,7 @@ from Statistic import Statistic
 class Graph:
   def __init__(self, nodesAmount):
     """Create a pre-populated Barabási-Albert graph."""
-    from Configuration import LINK_CREATION_PROBABILITY, INITIAL_CONNECTIONS
+    from Configuration import INITIAL_CONNECTIONS
 
     self.graph = nx.barabasi_albert_graph(nodesAmount, INITIAL_CONNECTIONS)
     self.statistic = Statistic()

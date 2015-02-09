@@ -13,7 +13,7 @@ print("\n\t-".join(["Plots will be saved to disk.", "N=number of nodes", "R=numb
 
 graphs = []
 statistics = []
-for i in range(0, ISLANDS):
+for i in range(0, VILLAGES):
   inhabitantsAmount = randint(AGENTS_AMOUNT_MIN, AGENTS_AMOUNT_MAX)
   graphs.append(Graph(inhabitantsAmount))
 
